@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { update } from './store';
+import Sub from './Sub';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+const App = () => {
+    const { dataSlice } = useSelector(state => state);
+    const dispatch = useDispatch();
+    return (
+        <div>
+            <Sub genre="Action" limit={5} />
+            <hr />
+            <Sub genre="Animation" limit={2} />
+            <hr />
+            <Sub genre="Action" limit={10} />
+            {
+                dataSlice.map(it => {
+                    return (
+                        <li onClick={() => dispatch(update({ id: 0, title: it.title, dec: "또 없지롱..." }))}>{it.title}</li>
+                    )
+                })
+            }
+        </div>
+    )
 }
 
-export default App;
+export default App
